@@ -1,0 +1,22 @@
+#!/bin/sh
+bat=/sys/class/power_supply/BAT0/
+per="$(cat "$bat/capacity")"
+
+[ $(cat "$bat/status") = Charging ] && echo "" && exit
+
+if [ "$per" -gt "90" ]; then
+	icon=""
+elif [ "$per" -gt "75" ]; then
+	icon=""
+elif [ "$per" -gt "50" ]; then
+	icon=""
+elif [ "$per" -gt "25" ]; then
+	icon=""
+	notify-send -u critical "Battery Getting Low" "Connect Charger"
+elif [ "$per" -gt "0" ]; then
+	icon=""
+	notify-send -u critical "Battery Extremely Low" "Connect Charger"
+else
+	icon=""
+fi
+echo "$icon"

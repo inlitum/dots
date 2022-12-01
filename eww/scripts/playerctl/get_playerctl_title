@@ -1,0 +1,10 @@
+#!/bin/sh
+
+
+status="$(playerctl status 2>&1)"
+
+if [ "$status" = "No players found" ]; then
+    echo ""
+else
+    playerctl metadata --format '{{ title }}'
+fi

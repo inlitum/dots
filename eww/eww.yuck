@@ -1,0 +1,95 @@
+
+
+(defvar workspace_buttons "")
+
+(defwidget bar []
+  (centerbox :orientation "h"
+    (workspaces)
+    (music)
+    (sidestuff)))
+
+(defwidget sidestuff []
+  (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
+    (metric :label ""
+            :max ""
+            :value speaker-volume
+            :onchange "amixer -D pulse sset Master {}%")
+    (metric :label ""
+            :max ""
+            :value mic-volume
+            :onchange "amixer -D pulse sset Capture {}%")
+    (metric :label ""
+            :max ""
+            :value {EWW_RAM.used_mem_perc}
+            :onchange "")
+    (metric :label ""
+            :max ""
+            :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+            :onchange "")
+    (metric :label battery
+            :max ""
+            :value {round((battery-capacity / 100) * 100, 0)}
+            :onchange "")
+    time
+    (button :class {dunst != "false" ? "dunst urgent" : "dunst"} 
+            :onclick "scripts/notifications/toggle_dunst"
+            {dunst == "false" ? "" : ""})
+    ))
+
+
+(defwidget workspaces []
+   (literal :content wsp :class 'workspaces'))
+
+(defwidget music []
+  (box :class "music"
+       :orientation "h"
+       :space-evenly false
+       :halign "center"
+    (metric :label {music != "" ? " ${music}  ${playerctl-position-pretty}/${playerctl-length-pretty}" : " ${playerctl-position-pretty}/${playerctl-length-pretty}"}
+            :value playerctl-position
+            :max playerctl-length
+            :onchange "amixer -D pulse sset Master {}%")))
+
+
+(defwidget metric [label value max onchange]
+  (box :orientation "h"
+       :class "metric"
+       :space-evenly false
+    (box :class "label" label)
+    (scale :min 0
+           :max {max != "" ? max : 101}
+           :active {onchange != ""}
+           :value {value != "" ? value : 0}
+           :onchange onchange)))
+
+
+
+
+(defpoll speaker-volume            :interval "1s"       "scripts/sound/get_speaker_vol")
+(defpoll mic-volume                :interval "1s"       "scripts/sound/get_mic_vol")
+
+(defpoll time                      :interval "1s"       "date '+%H:%M:%S %b %d, %Y'")
+
+(defpoll dunst			   :interval "0.1s"     "scripts/notifications/is_dunst_paused")
+
+(defpoll battery		   :interval "1s"       "scripts/battery/get_battery_icon")
+(defpoll battery-capacity	   :interval "1s"       "scripts/battery/get_battery_capacity")
+(deflisten wsp "scripts/getworkspaces")
+
+(defpoll music                     :interval "1s"       "scripts/playerctl/get_playerctl_title")
+(defpoll playerctl-position        :interval "1s"       "scripts/playerctl/get_playerctl_position")
+(defpoll playerctl-position-pretty :interval "1s"       "scripts/playerctl/get_playerctl_position_pretty")
+(defpoll playerctl-length          :interval "1s"       "scripts/playerctl/get_playerctl_length")
+(defpoll playerctl-length-pretty   :interval "1s"       "scripts/playerctl/get_playerctl_length_pretty")
+
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "90%"
+                      :height "20px"
+                      :anchor "top center")
+  :reserve  (struts   :side "top" 
+                      :distance "4%")
+  (bar))

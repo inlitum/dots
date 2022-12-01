@@ -1,0 +1,2 @@
+#!/bin/sh
+amixer -D pulse sget Capture | grep 'Mono:' | awk -F'[][]' '{ print $2 }' | tr -d '%' | head -1

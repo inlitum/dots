@@ -1,0 +1,100 @@
+$bar-height: 20px;
+
+$light-dark: #525151;
+$dark: #333333;
+$light: #d3e6d3;
+$additional: #3a7575;
+$s: #243335;
+$urgent: #b33f40;
+
+* {
+  all: unset; //Unsets everything so you can style everything from scratch
+  font-family: "JetBrainsMonoNL Nerd Font Mono"
+}
+
+//Global Styles
+.bar {
+  background-color: $dark;
+  color: $light;
+  min-height: $bar-height;
+}
+
+.sidestuff slider {
+  all: unset;
+  color: $additional;
+}
+
+.metric scale trough highlight {
+  all: unset;
+  background-color: $additional;
+  color: $dark;
+  border-radius: 10px;
+}
+.metric scale trough {
+  all: unset;
+  background-color: $dark;
+  border-radius: 50px;
+  min-height: 3px;
+  min-width: 50px;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+.metric scale trough highlight {
+  all: unset;
+  background-color: $additional;
+  color: $dark;
+  border-radius: 10px;
+}
+.metric scale trough {
+  all: unset;
+  background-color: $light-dark;
+  border-radius: 50px;
+  min-height: 3px;
+  min-width: 50px;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+.label-ram {
+  font-size: large;
+}
+
+.active {
+  background-color: $light;
+  color: $dark;
+}
+
+.urgent {
+  background-color: $urgent;
+  color: $light;
+}
+
+button {
+  margin-right: 1px;
+
+  min-width: $bar-height;
+  min-height: $bar-height;
+
+  border-radius: 0px;
+  border-width: 1px;
+  border-color: $light;
+  border-style: solid;
+}
+
+button:hover {
+  color: $additional;
+}
+
+button.urgent:hover {
+  background-color: $urgent;
+  color: $light;
+}
+
+// Prevent hover from changing the color of the text when the button is active.
+button.active:hover {
+  background-color: $light;
+  color: $dark;
+}
+
+button.dunst {
+  margin-left: 4px;
+}

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+state=$(cat monitor_state)
+
+option_s=""
+
+option=`echo -e "work\nhome" | rofi -width 600 -height 200 -dmenu -p "monitor (requires logout)"`
+case $option in
+	work)
+	    cp ~/.screenlayout/work.sh ~/.screenlayout/monitors.sh
+	    ;;
+	home)
+	    cp ~/.screenlayout/home.sh ~/.screenlayout/monitors.sh
+	    ;;
+esac

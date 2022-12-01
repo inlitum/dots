@@ -1,0 +1,9 @@
+#!/bin/sh
+
+status="$(playerctl status 2>&1)"
+
+if [ "$status" = "No players found" ]; then
+    echo "0:00"
+else
+    playerctl position --format '{{duration(position)}}'
+fi

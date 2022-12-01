@@ -1,0 +1,1 @@
+(box :orientation "h" :class "workspaces" :halign "start" :valign "center" (button :class "inactive  bordered" :onclick "wmctrl -s 0" "一")(button :class "active  bordered" :onclick "wmctrl -s 1" "九"))

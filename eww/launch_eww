@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Execute eww daemon"
+/home/jborrie/scripts/eww daemon
+sleep 1
+echo "run the open bar"
+/home/jborrie/scripts/eww open bar
